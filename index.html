@@ -1,0 +1,355 @@
+<html><head><base href="." />
+<title>Rede Carimbo - Comunicação Paraense</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --primary: #007f4e;
+  --secondary: #ffd700;
+  --dark: #1a1a1a;  
+  --light: #f5f5f5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: var(--light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: var(--primary);
+  padding: 0.5rem;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo img {
+  width: 60px;
+  height: auto;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 100;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100vh;
+  background: var(--dark);
+  padding: 2rem;
+  transition: right 0.3s ease;
+  z-index: 99;
+}
+
+nav.active {
+  right: 0;
+}
+
+nav ul {
+  list-style: none;
+  margin-top: 60px;
+}
+
+nav li {
+  margin: 1.5rem 0;
+}
+
+nav a {
+  color: var(--light);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+  position: relative;
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--secondary);
+  transition: width 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: var(--secondary);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 98;
+  backdrop-filter: blur(3px);
+}
+
+.overlay.active {
+  display: block;
+}
+
+.hero {
+  background: var(--dark);
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+
+.live-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.youtube-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--light);
+  border-top: 5px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.channel-title {
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  flex: 1;
+}
+
+footer {
+  background: var(--dark);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: 300px;
+  }
+  
+  .content {
+    padding: 0 1rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <img src="/LogoRedeCarimbo.png" alt="Logo Rede Carimbo">
+    <h1>Rede Carimbo</h1>
+  </div>
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<div class="overlay"></div>
+
+<nav>
+  <ul>
+    <li><a href="https://redecarimbo.github.io/tv">TV Carimbo</a></li>
+    <li><a href="https://redecarimbo.github.io/radio">Rádio Carimbo</a></li>
+    <li><a href="https://jogosdeinclusao.github.io/">Jogos de Inclusão</a></li>
+    <li><a href="https://carimboplus.github.io/">Carimbo+</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="live-container">
+    <div class="youtube-container" id="player"></div>
+    <div class="loading-screen" id="loading">
+      <div class="spinner"></div>
+      <p>Carregando transmissão...</p>
+    </div>
+    <div class="channel-title">TV Rede Carimbo HD</div>
+  </div>
+</section>
+
+<main class="content">
+</main>
+
+<footer>
+  <p>&#169; 2025 Rede Carimbo - Todos os direitos reservados</p>
+  <p>Estúdio da Rede Carimbo - Belém, PA</p>
+</footer>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('nav');
+  const overlay = document.querySelector('.overlay');
+  
+  hamburger.addEventListener('click', function() {
+    nav.classList.toggle('active');
+    overlay.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+
+  overlay.addEventListener('click', function() {
+    nav.classList.remove('active');
+    overlay.classList.remove('active');
+    hamburger.classList.remove('active');
+  });
+});
+
+let player;
+function onYouTubeIframeAPIReady() {
+  fetch('https://www.googleapis.com/youtube/v3/search?key=YOUR_API_KEY&channelId=UCthffwIjEIV6ud8SyHChHsA&part=snippet,id&order=date&maxResults=1')
+    .then(response => response.json())
+    .then(data => {
+      const videoId = data.items[0].id.videoId;
+      createPlayer(videoId);
+    })
+    .catch(error => {
+      console.error('Error fetching YouTube data:', error);
+      document.getElementById('loading').style.display = 'flex';
+    });
+}
+
+function createPlayer(videoId) {
+  player = new YT.Player('player', {
+    height: '100%',
+    width: '100%',
+    videoId: videoId,
+    playerVars: {
+      'autoplay': 1,
+      'controls': 0,
+      'showinfo': 0,
+      'rel': 0,
+      'modestbranding': 1
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange,
+      'onError': onPlayerError
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  event.target.playVideo();
+  document.getElementById('loading').style.display = 'none';
+}
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    player.playVideo();
+  }
+}
+
+function onPlayerError(event) {
+  console.error('YouTube Player Error:', event);
+  document.getElementById('loading').style.display = 'flex';
+}
+</script>
+
+</body>
+</html>
